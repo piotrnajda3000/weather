@@ -1,0 +1,72 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --mainBgColor: hsl(240, 0%, 99%);
+}
+
+.goodWeather {
+  background-color: rgb(255, 255, 116) !important;
+}
+
+.badWeather {
+  background-color: rgb(53, 49, 92);
+}
+
+body {
+  padding: 1rem;
+  background-color: var(--mainBgColor);
+  font-family: sans-serif;
+}
+
+form {
+  background-color: hsl(240, 0%, 95%);
+  padding: 1rem;
+  border-radius: 1rem 1rem 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+input {
+  outline: none;
+}
+
+input,
+button {
+  border-style: solid;
+  border-color: hsl(240, 0%, 90%);
+  height: 2em;
+}
+
+#weatherWrapper {
+  background-color: hsl(240, 0%, 95%);
+  padding: 1em;
+  border-radius: 0 0 1rem 1rem;
+  transition: background-color 700ms ease-in-out;
+}
+
+#messageWrapper {
+  background-color: hsl(240, 0%, 90%);
+}
+
+p.message {
+  height: 1em;
+  padding: 1em;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.visible {
+  opacity: 1 !important;
+}
+
+#content {
+  max-width: 440px;
+}
