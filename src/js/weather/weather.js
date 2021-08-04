@@ -7,7 +7,8 @@ const getWeatherJson = async (location) => {
   events.publish("Loading", true);
 
   const response = await fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=8951ae3792a1f0c2acc0864b82b68865&units=${units}`
+    `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=8951ae3792a1f0c2acc0864b82b68865&units=${units}`,
+    { mode: "cors" }
   );
 
   events.publish("Loading", false);
