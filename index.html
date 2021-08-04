@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WitherWeather</title>
+  <script defer src="main.js"></script></head>
+  <body>
+    <div id="content">
+      <form name="searchWeather" autocomplete="off" novalidate>
+        <input
+          type="text"
+          name="location"
+          pattern="[^0-9]*"
+          minlength="2"
+          required
+        />
+        <button>Go</button>
+
+        <input type="radio" id="celsius" name="temperature" value="metric" />
+        <label for="celsius">C</label>
+
+        <input
+          type="radio"
+          id="fahrenheit"
+          name="temperature"
+          value="imperial"
+        />
+        <label for="fahrenheit">F</label>
+      </form>
+
+      <div id="messageWrapper">
+        <p class="message" aria-live="polite"></p>
+      </div>
+      <div id="weatherWrapper"></div>
+    </div>
+  </body>
+</html>
