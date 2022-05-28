@@ -1,17 +1,32 @@
 import getWeather from "./weather/weather";
-import events from "./libraries/events";
 import unitPreference from "./weather/units";
 
-export default (function UI() {
-  const createInfo = function createWeatherInfo(name, data, text = data) {
-    const para = document.createElement("p");
-    para.classList.add(name);
-    para.textContent = text;
-    return para;
-  };
+import events from "./events";
 
+// Cache dom
+const weatherWrapper = document.querySelector("#weatherWrapper");
+
+const messageDisplay = document.querySelector(".message");
+
+const searchForm = document.querySelector('form[name="searchWeather"]');
+const searchInput = searchForm.querySelector("input");
+
+const fahrenheitBttn = document.querySelector("#fahrenheit");
+const celsiusBttn = document.querySelector("#celsius");
+const unitButtons = [fahrenheitBttn, celsiusBttn];
+
+// https://stackoverflow.com/questions/494143/creating-a-new-dom-element-from-an-html-string-using-built-in-dom-methods-or-pro/35385518#35385518
+export function htmlToElement(html) {
+  let template = document.createElement("template");
+  html = html.trim(); // Never return a text node of whitespace as the result
+  template.innerHTML = html;
+  return template.content.firstChild;
+}
+
+export default (function UI() {
   const colorBackground = (clouds, temp, unit) => {
-    if (/clear|few/.test(clouds)) {
+    const isGoodWeather = /clear|few/.test(clouds) 
+    if (isGoodWeather) {
       if ((unit == "C" && temp > 21) || (unit == "F" && temp > 69)) {
         weatherWrapper.classList.add("goodWeather");
       }
@@ -26,18 +41,10 @@ export default (function UI() {
     colorBackground(weather.clouds, weather.temp, weather.units);
     weatherWrapper.innerHTML = "";
     weatherWrapper.append(
-      createInfo("city", weather.city),
-      createInfo("clouds", weather.clouds),
-      createInfo(
-        "tempDisplay",
-        weather.temp,
-        `Temperature: ${weather.temp} ${weather.units}`
-      ),
-      createInfo(
-        "tempDisplay",
-        weather.feelsLike,
-        `Feels like: ${weather.feelsLike} ${weather.units}`
-      )
+      htmlToElement(`<p class='city'>${weather.city}</p>`),
+      htmlToElement(`<p class='clouds'>${weather.clouds}</p>`),
+      htmlToElement(`<p class='tempDisplay'>Temperature: ${weather.temp} ${weather.units}</p>`),
+      htmlToElement(`<p class='tempDisplay'>Feels like: ${weather.feelsLike} ${weather.units}`)
     );
   };
 
@@ -86,26 +93,12 @@ export default (function UI() {
     }
   };
 
-  // Cache dom
-  const weatherWrapper = document.querySelector("#weatherWrapper");
-
-  const messageDisplay = document.querySelector(".message");
-
-  const searchForm = document.querySelector('form[name="searchWeather"]');
-  const searchInput = searchForm.querySelector("input");
-
-  const fahrenheitBttn = document.querySelector("#fahrenheit");
-  const celsiusBttn = document.querySelector("#celsius");
-  const unitButtons = [fahrenheitBttn, celsiusBttn];
-
   async function init() {
-    // with either 'C' or 'F' clicked by the user
     events.subscribe("Update unit checkbox", unitsCheckbox);
 
     events.subscribe("Loading", loadingStatus);
 
-    // from default location
-    displayWeather(getWeather());
+    displayWeather(getWeather()); // from default location
 
     searchForm.addEventListener("submit", processForm);
 

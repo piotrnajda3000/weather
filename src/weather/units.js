@@ -1,4 +1,4 @@
-import events from "../libraries/events";
+import events from "../events";
 
 export default (function unitPreference() {
   const setDefault = function setDefaultUnits() {

@@ -1,4 +1,4 @@
-import events from "../libraries/events";
+import events from "../events";
 import unitPreference from "./units";
 
 const getWeatherJson = async (location) => {
